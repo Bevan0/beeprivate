@@ -1,3 +1,5 @@
+# Credit to github.com/kem0o who has made the code for Neonite available - it was a huge help in this
+
 import asyncio
 
 # Import Sanic (web framework)
@@ -12,6 +14,25 @@ app = Sanic("BeePrivate")
 @app.route("/")
 async def test_page(req):
     return text("Testing...")
+
+
+# Lightswitch Status API - we're returning static data for now
+@app.route("/lightswitch/api/service/bulk/status")
+async def lightswitch_status(req):
+    return json({
+        "serviceInstanceId": "fortnite",
+			"status": "UP",
+			"message": "WIP epic gamers",
+			"maintenanceUri": None,
+			"overrideCatalogIds": ["a7f138b2e51945ffbfdacc1af0541053"],
+			"allowedActions": ["PLAY", "DOWNLOAD"],
+			"banned": False,
+			"launcherInfoDTO": {
+				"appName": "Fortnite",
+				"catalogItemId": "4fe75bbc5a674f4f9b356b5c90567da5",
+				"namespace": "fn"
+			}
+    })
 
 
 # Run web server
