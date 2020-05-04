@@ -6,35 +6,25 @@ import asyncio
 from sanic import Sanic
 from sanic.response import text, json
 
+# Pages from other files
+from src import status
+
 # Setup Sanic
 app = Sanic("BeePrivate")
 
 
 # Test page - this is never queried by Fortnite so we're using it to ensure the web server is running correctly when debugging
-@app.route("/")
 async def test_page(req):
-    return text("Testing...")
-
-
-# Lightswitch Status API - we're returning static data for now
-@app.route("/lightswitch/api/service/bulk/status")
-async def lightswitch_status(req):
-    return json({
-        "serviceInstanceId": "fortnite",
-        "status": "UP",
-        "message": "WIP epic gamers",
-        "maintenanceUri": None,
-        "overrideCatalogIds": ["a7f138b2e51945ffbfdacc1af0541053"],
-        "allowedActions": ["PLAY", "DOWNLOAD"],
-        "banned": False,
-        "launcherInfoDTO": {
-            "appName": "Fortnite",
-            "catalogItemId": "4fe75bbc5a674f4f9b356b5c90567da5",
-            "namespace": "fn"
-        }
-    })
+    return text("Working!")
 
 
 # Run web server
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    # Add routes
+    app.add_route("/", test_page)
+
+    status_pages = status.get_all_urls()
+    for url in status_pages:
+        app.add_route(url[1], url[0])
+
+    app.run(host="localhost", port=80)
