@@ -7,7 +7,7 @@ from sanic import Sanic
 from sanic.response import text, json
 
 # Pages from other files
-from src import status
+from api import status
 
 # Setup Sanic
 app = Sanic("BeePrivate")
