@@ -21,7 +21,7 @@ async def test_page(req):
 # Run web server
 if __name__ == "__main__":
     # Add routes
-    app.add_route("/", test_page)
+    app.add_route(test_page, "/")
 
     status_pages = status.get_all_urls()
     for url in status_pages:
